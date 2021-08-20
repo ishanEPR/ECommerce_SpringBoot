@@ -128,7 +128,7 @@ public class HomeController {
 	
 	
 	@PostMapping("/updateitem") 
-	public String update_item(@ModelAttribute("Item") Items item, @RequestParam("name")String[] name) {
+	public String update_item(@RequestParam("name")String[] name, @ModelAttribute("Item") Items item) {
 		if((item.getName()!=null && item.getPrice()!=0) && (item.getStock() !=0)) {
 			
 			int pos=shoppingCart.check_item(name[0]);
@@ -137,7 +137,7 @@ public class HomeController {
 			
 			if(pos>=0) {
 				Items items=shoppingCart.getItems().get(pos);
-				items.setName(item.getName().trim());
+				items.setName(name[1]);
 				items.setPrice(item.getPrice());
 				items.setStock(item.getStock());
 				System.out.println(item.toString());
@@ -207,6 +207,21 @@ public class HomeController {
 				customer1.setName(name[1]);
 				customer1.setContact(customer.getContact());
 				return "redirect:init";
+			}
+		}
+		return "redirect:init";
+	}
+	
+	//delete customer
+	@GetMapping("/del_cust")
+	public String deletecust(@RequestParam("customer")String name) {
+		if(name!= null)
+		{
+			int pos=shoppingCart.check_cust(name);
+			if(pos>=0)
+			{
+				shoppingCart.getCustomers().remove(pos);
+				
 			}
 		}
 		return "redirect:init";
