@@ -104,14 +104,14 @@ public class HomeController {
 	
 	@PostMapping("/saveitem")
 	public String save_item(@ModelAttribute("Item") Items item) {
-		if((item.getName()!=null && item.getPrice()!=0) || item.getStock() !=0) {
+		if((item.getName()!=null && item.getPrice()!=0) && (item.getStock() !=0)) {
 			
 			int pos=shoppingCart.check_item(item.getName());
 			
 			
 			if(pos>=0) {
 				Items items=shoppingCart.getItems().get(pos);
-				items.setName(item.getName());
+				items.setName(item.getName().trim());
 				items.setPrice(item.getPrice());
 				items.setStock(item.getStock());
 				
@@ -124,6 +124,35 @@ public class HomeController {
 		return "redirect:items";
 		
 	}
+	
+	
+	
+	@PostMapping("/updateitem") 
+	public String update_item(@ModelAttribute("Item") Items item, @RequestParam("name")String[] name) {
+		if((item.getName()!=null && item.getPrice()!=0) && (item.getStock() !=0)) {
+			
+			int pos=shoppingCart.check_item(name[0]);
+			System.out.println(pos +"=> "+name[0]);
+			
+			
+			if(pos>=0) {
+				Items items=shoppingCart.getItems().get(pos);
+				items.setName(item.getName().trim());
+				items.setPrice(item.getPrice());
+				items.setStock(item.getStock());
+				System.out.println(item.toString());
+				
+				return "redirect:items";
+			}else {
+				
+				shoppingCart.add_item(item);
+			}
+		}
+		return "redirect:items";
+		
+	}
+	
+	
 	
 	@GetMapping("/itemupd")
 	public String upd_item(@RequestParam("name")String name,Model model) {
