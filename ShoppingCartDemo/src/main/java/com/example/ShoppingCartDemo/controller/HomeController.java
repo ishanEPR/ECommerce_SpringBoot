@@ -125,5 +125,18 @@ public class HomeController {
 		
 	}
 	
+	@GetMapping("/itemupd")
+	public String upd_item(@RequestParam("name")String name,Model model) {
+		if(name!=null) {
+			int pos=shoppingCart.check_item(name);
+			if(pos>=0) {
+				Items item=shoppingCart.getItems().get(pos);
+				model.addAttribute("Item", item);
+				return "item_form_update";
+			}
+		}
+		return "redirect:items";
+	}
+	
 
 }
