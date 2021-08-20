@@ -53,5 +53,15 @@ public class HomeController {
 		}
 		return "redirect:init";
 	}
+	
+	
+	@GetMapping("/addcustomer")
+	public String add_cust(Model model) {
+		
+		model.addAttribute("customer", new Customer());
+		
+		return "cust_form";
+	}
+	
 
 }
