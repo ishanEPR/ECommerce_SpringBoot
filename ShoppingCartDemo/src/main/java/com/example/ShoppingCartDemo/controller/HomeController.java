@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.ShoppingCartDemo.entity.Basket;
 import com.example.ShoppingCartDemo.entity.Customer;
@@ -37,6 +38,20 @@ public class HomeController {
 		model.addAttribute("customers", shoppingCart.getCustomers());
 		
 		return "home";
+	}
+	
+	
+	@GetMapping("/shop")
+	public String cust_items(@RequestParam("customer")String name,Model model) {
+		
+		int pos=shoppingCart.check_cust(name);
+		
+		if(pos>=0) {
+			model.addAttribute("customer",name);
+			model.addAttribute("items",shoppingCart.getItems());
+			return "cust_list";
+		}
+		return "redirect:init";
 	}
 
 }
