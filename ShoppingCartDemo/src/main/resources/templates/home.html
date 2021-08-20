@@ -29,7 +29,9 @@
 			<tr th:each="a:${customers}">
 				<td th:text="${a.name}"></td>
 				<td th:text="${a.contact}"></td>
-				<td></td>
+				<td>
+					<a th:href="@{shop(customer=${a.name})}" class="btn btn-info">Shop</a>
+				</td>
 			
 			</tr>
 		</tbody>
