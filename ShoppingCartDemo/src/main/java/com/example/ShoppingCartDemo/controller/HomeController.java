@@ -5,6 +5,8 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -61,6 +63,28 @@ public class HomeController {
 		model.addAttribute("customer", new Customer());
 		
 		return "cust_form";
+	}
+	
+	@PostMapping("/savecust")
+	public String save_cust(@ModelAttribute("customer")Customer customer) {
+		if(customer.getName()!=null && customer.getContact()!=null) {
+			
+			int pos=shoppingCart.check_cust(customer.getName());
+			Customer tosave=null;
+			
+			if(pos>=0) {
+				tosave=shoppingCart.getCustomers().get(pos);
+				tosave.setName(customer.getName());
+				tosave.setContact(customer.getContact());
+				
+				return "redirect:init";
+			}else {
+				tosave=customer;
+				shoppingCart.add_customer(tosave);
+			}
+		}
+		return "redirect:init";
+		
 	}
 	
 
