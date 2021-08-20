@@ -138,5 +138,18 @@ public class HomeController {
 		return "redirect:items";
 	}
 	
+	@GetMapping("/itemdel")
+	public String del_item(@RequestParam("name")String name) {
+		
+		if(name!=null) {
+			int pos=shoppingCart.check_item(name);
+			if(pos>=0) {
+				Items item=shoppingCart.getItems().remove(pos);
+			
+				
+			}
+		}
+		return "redirect:items";
+	}
 
 }
