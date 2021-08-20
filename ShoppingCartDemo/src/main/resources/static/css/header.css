@@ -1,0 +1,13 @@
+nav{
+	background-color: #222831;
+	margin-top:-7px;
+	padding: 4px;
+	margin-left: -5px;
+	width: 100%;
+}
+
+nav h2{
+	font-size: 25px;
+	color: white;
+	margin-left: 400px;
+}
