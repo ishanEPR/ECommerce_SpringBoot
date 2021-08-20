@@ -87,5 +87,13 @@ public class HomeController {
 		
 	}
 	
+	@GetMapping("/additems")
+	public String add_item(Model model) {
+		model.addAttribute("Item",new Items());
+		
+		return "item_form";
+		
+	}
+	
 
 }
